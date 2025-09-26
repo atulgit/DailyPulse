@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rate-limit-config
+  namespace: istio-system
+spec:
+  config.yaml:
+    domain: "per-endpoint"
+    descriptors:
+      - key: per_endpoint
+        value: "breaking-news-limit"
+        rate_limit:
+          request_per_unit: 1
+          unit: MINUTE
+
+      - key: per_endpoint
+        value: general-news-limit
+        rate_limit:
+          request_per_unit: 5
+          unit: MINUTE
+
+      - key: per_endpoint
+        value: create-comment-limit
+        rate_limit:
+          request_per_unit: 10
+          unit: MINUTE
+
+      - key: per_endpoint
+        value: general-comment-limit
+        rate_limit:
+          request_per_unit: 20
+          unit: MINUTE
+
+
+
+

@@ -1,0 +1,25 @@
+{
+  "serviceName": "news-service",
+  "task-definition": "news-service",
+  "launchType": "FARGATE",
+  "desiredCount": 2,
+  "cluster": "CLUSTER_NAME",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnets-xxxxxxxx"
+      ],
+      "securityGroups": [
+        "sg-xxxxxxx"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "loadBalancers": [
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:<REGION>:<ACCOUNT_ID>:targetgroup/comment-service/xxxxxxxxxxxxxxxxx",
+      "containerName": "comment-service",
+      "containerPort": 8080
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "containerDefinition": [
+    {
+      "name": "comment-service",
+      "image": "<ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/comment-service:latest",
+      "cpu": 512,
+      "memory": 1024,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "AWS_APPMESH_VIRTUAL_NODE_NAME",
+          "value": "arn:aws:appmesh:us-west-2:123456789012:mesh/my-app-mesh/virtualNode/comment-service"
+        },
+        {
+          "name": "MONGO_HOST",
+          "value": "mongodb.internal"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/comment-service",
+          "awslogs-region": "<REGION>",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

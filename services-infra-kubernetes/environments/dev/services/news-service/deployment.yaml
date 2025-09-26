@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-service-v1
+  labels:
+    app: news-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-service
+  template:
+    metadata:
+      labels:
+        app: news-service
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: news-service
+          image: my-docker-repo/news-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8084

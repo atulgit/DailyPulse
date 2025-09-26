@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-service-v1
+  labels:
+    app: comment-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment-service
+  template:
+    metadata:
+      labels:
+        app: comment-service
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: comment-service
+          image: my-docker-repo/news-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8084
